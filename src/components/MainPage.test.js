@@ -16,3 +16,40 @@ beforeEach(() => {
 it ('renders main page without crashing',() => {
   expect(wrapper).toMatchSnapshot();
 }) 
+
+it('filters robots correctly', () => {
+  const mockProps2= {
+    onRequestRobots : jest.fn(),
+    robots: [{
+      id: 3,
+      name: 'John',
+      email: 'john@email.com'
+    }],
+    searchField: 'john', 
+    isPending: false
+}
+  const wrapper2 = shallow(<MainPage { ...mockProps2} />)
+  expect(wrapper2.instance().filteredRobots()).toEqual([{
+    id: 3,
+    name: 'John',
+    email: 'john@email.com'
+  }]);
+  
+})
+
+it('filters robots correctly 2', () => {
+  const mockProps3= {
+    onRequestRobots : jest.fn(),
+    robots: [{
+      id: 3,
+      name: 'John',
+      email: 'john@email.com'
+    }],
+    searchField: 'a', 
+    isPending: false
+}
+  const filteredRobots = [];
+  const wrapper3 = shallow(<MainPage { ...mockProps3} />)
+  expect(wrapper3.instance().filteredRobots()).toEqual(filteredRobots);
+  
+})
